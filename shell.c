@@ -48,18 +48,15 @@ int run_process(char **args){
      	 }
 
      	exit(EXIT_FAILURE);
+     
      }else if(pid < 0){
      	printf("Error in forking"); 
      }else{
-     	 
-     	 
 
             do{
               wait_pid = waitpid(pid , &p_status,  WUNTRACED);    
-     	 	}while(!WIFEXITED(p_status) && !WIFSIGNALED(p_status));
-
-
-     	 	
+     	    }while(!WIFEXITED(p_status) && !WIFSIGNALED(p_status));
+ 	 	
      	 
      }
 
@@ -75,13 +72,13 @@ char ** split_line(char *line){
   
   result[index] = strtok(line , SPACE);
   while(1){
-      
-      
+   
       if(result[index] == NULL){
       
          result[index++] = NULL;
       	 break;
       }
+   
       index++;
       result[index] =  strtok(NULL, SPACE);
       
@@ -98,7 +95,7 @@ char ** split_line(char *line){
 char *get_line(){
 
 
-	char *line = malloc(MAX_LENGTH_COMMAND); 
+    char *line = malloc(MAX_LENGTH_COMMAND); 
     int index = 0; 
 
     while(1){
@@ -107,10 +104,7 @@ char *get_line(){
     	 if(c == '\n' || c == EOF)
     	 {
     	 	line[index++] = '\0'; 
-   
-            
-
-    	 	return line; 
+      	 	return line; 
   
     	 }
 
@@ -133,7 +127,7 @@ void shell_loop(){
 	while(1){
 
 	    printf("\033[1;34m");
-		getcwd(current_dir , MAX_DIR_NAME);
+	    getcwd(current_dir , MAX_DIR_NAME);
 	    
 	    printf("%s>" , current_dir);
 	    printf("\033[0m");
@@ -141,16 +135,16 @@ void shell_loop(){
 	    line        = get_line();
 	    spli_line  =  split_line(line);
 
-         if(strcmp(spli_line[0] , "cd") == 0)
-           {
+            if(strcmp(spli_line[0] , "cd") == 0)
+            {
      	        shell_func[0](spli_line);
      	        continue;
-           }
+            }
 
 
-        run_process(spli_line);
-        free(line); 
-        free(spli_line);     
+          run_process(spli_line);
+          free(line); 
+          free(spli_line);     
         
 
     } 
